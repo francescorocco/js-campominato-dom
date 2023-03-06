@@ -19,6 +19,14 @@ header{
     padding: 15px;
 }
 
+h1#score {
+    color: white;
+    font-size: 3rem;
+    font-family: sans-serif;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
 #big-square {
     height: 800px;
     width: 800px;
@@ -144,3 +152,4 @@ select {
     color: #000000;
   }
   
+

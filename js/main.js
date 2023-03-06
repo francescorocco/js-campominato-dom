@@ -4,66 +4,81 @@
 const bigSquareDom = document.getElementById('big-square');
 let newButtonDom = document.getElementById('btn');
 let blacklistNumber=[];
+let score=0;
+const scoreDom = document.getElementById('score')
 
 let difficultyDom= document.getElementById('difficulty');
 
-let bombaEsplosa = false;
+
 
 newButtonDom.addEventListener('click',
     function(){
+        blacklistNumber=[];
+        score=0;
+        scoreDom.innerHTML=`Il tuo punteggio è di: ${score}`;
         bigSquareDom.innerHTML='';
-        
+        let bombaEsplosa = false;
+
+        for (let c=1; c <= 16; c++ ){
+            let numberGenerated = generateUniqueRandomNumber(blacklistNumber, 1, difficultyDom.value);
+            blacklistNumber.push(numberGenerated);
+            console.log(numberGenerated);
+        }
         
         for (let i = 0; i < difficultyDom.value; i++){
             
+
             const squareCreation = createNewSquare(i+1, difficultyDom.value);
             
             if(blacklistNumber.includes(i+1)){
                 squareCreation.classList.add('bomba');
             }
-            
-            // let esplose = document.querySelectorAll('div.bomba');
-
+                        
             squareCreation.addEventListener('click',
             
             function(){
-                if(bombaEsplosa == false){
+                if(bombaEsplosa == false && score < (difficultyDom.value - 16)){
                     
                     if(this.classList.contains('bomba')){
                         this.classList.add('clicked-bomb');
                         let esplose = document.getElementsByClassName('bomba');
-                        console.log(esplose);
-                        esplose[d].classList.add('clicked-bomb')                        
-
+                        scoreDom.innerHTML=`Hai perso`;
+                        
+                        for(let d = 0; d < esplose.length; d++){
+                            esplose[d].classList.add('clicked-bomb');                        
+                        }
 
                         bombaEsplosa = true;
                         
                     }else{
                         this.classList.add('clicked');
                         console.log(squareCreation.innerHTML);
-
+                        score += 1;
+                        scoreDom.innerHTML=`Il tuo punteggio è di: ${score}`;                        
                     }
+                    
+                }else if(score == (difficultyDom.value - 16)){
+                    
+                }else{
 
-                }else {
-                        // esplose.classList.add('clicked-bomb');
-                        // console.log('esplose');
                 }
+
             }
             );
-
+            
             bigSquareDom.append(squareCreation);
-
-
+           
+            
         }
-
+        
     }
-);
-
-
-function bombGenerator(number){
-    squareNew.classList.add('bomb');
-}
-
+    );
+    
+    
+    function bombGenerator(number){
+        squareNew.classList.add('bomb');
+    }
+    
 let squareNew = '';
 
 function createNewSquare(number, difficultyClass){
@@ -95,11 +110,7 @@ function generateUniqueRandomNumber(blacklist, min, max) {
     return randomNumber;
 }
 
-for (let c=1; c <= 16; c++ ){
-    let numberGenerated = generateUniqueRandomNumber(blacklistNumber, 1, difficultyDom.value);
-    blacklistNumber.push(numberGenerated);
-    console.log(numberGenerated);
-}
+
 
 
 console.log(blacklistNumber);
